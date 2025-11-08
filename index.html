@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>План поездки по Праге</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .tab-button {
+      background-color: #e5e7eb;
+      color: #374151;
+    }
+    .tab-button.active {
+      background-color: #1f2937;
+      color: white;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  
+  <!-- Шапка -->
+  <header class="bg-gray-800 text-white py-6 px-4">
+    <div class="container mx-auto">
+      <h1 class="text-3xl md:text-4xl font-bold text-center">
+        🏰 План поездки по Праге
+      </h1>
+      <p class="text-center text-gray-300 mt-2">9-11 ноября 2025</p>
+    </div>
+  </header>
+
+  <!-- Вкладки -->
+  <div class="container mx-auto px-4 mt-6">
+    <div class="flex flex-wrap gap-2 mb-6">
+      <button onclick="showTab(1)" id="tab1-btn" 
+              class="tab-button flex-1 min-w-[150px] px-4 py-3 rounded-lg font-medium transition-colors">
+        День 1 (Воскресенье)
+      </button>
+      <button onclick="showTab(2)" id="tab2-btn" 
+              class="tab-button flex-1 min-w-[150px] px-4 py-3 rounded-lg font-medium transition-colors">
+        День 2 (Понедельник)
+      </button>
+      <button onclick="showTab(3)" id="tab3-btn" 
+              class="tab-button flex-1 min-w-[150px] px-4 py-3 rounded-lg font-medium transition-colors">
+        День 3 (Вторник)
+      </button>
+    </div>
+
+    <!-- Содержимое вкладки 1 -->
+    <div id="tab1-content" class="tab-content">
+      <!-- Day 1 Cards -->
+      <div id="day1-cards"></div>
+    </div>
+    
+    <!-- Содержимое вкладки 2 -->
+    <div id="tab2-content" class="tab-content">
+      <!-- Day 2 Cards -->
+      <div id="day2-cards"></div>
+    </div>
+    
+    <!-- Содержимое вкладки 3 -->
+    <div id="tab3-content" class="tab-content">
+      <!-- Day 3 Cards -->
+      <div id="day3-cards"></div>
+    </div>
+  </div>
+
+  <script>
+    // Data from plan_data.json (with Google search prefix removed and proper URL encoding)
+    const planData = {
+      "day1_arrival": {
+        "mapUrl": null,
+        "imageUrl": "https://images.unsplash.com/photo-1519677100203-a0e668c9c93c?q=80&w=1974&auto=format&fit=crop",
+        "imageAlt": "Вечерняя улица в Праге в ноябре"
+      },
+      "day1_wenceslas": {
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Hotel+Adeba+Praha&destination=Můstek+Praha&travelmode=transit",
+        "imageUrl": "https://images.unsplash.com/photo-1596305016259-3c726d3d0434?q=80&w=1974&auto=format&fit=crop",
+        "imageAlt": "Вацлавская площадь в сумерках"
+      },
+      "day1_lucerna": {
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Můstek+Praha&destination=Staroměstský+orloj+Praha&waypoints=Palác+Lucerna+Praha|Františkánská zahrada Praha",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Kůň-David_Černý-Palác_Lucerna_01.jpg/800px-Kůň-David_Černý-Palác_Lucerna_01.jpg",
+        "imageAlt": "Скульптура 'Конь' в пассаже Люцерна"
+      },
+      "day1_old_town": {
+        "mapUrl": null,
+        "imageUrl": "https://images.unsplash.com/photo-1607217597195-65a43c2450c1?q=80&w=1935&auto=format&fit=crop",
+        "imageAlt": "Староместская площадь и Тынский храм зимой"
+      },
+      "day1_clock": {
+        "mapUrl": null,
+        "imageUrl": "https://images.unsplash.com/photo-1563427953281-52d91f4f89c4?q=80&w=1964&auto=format&fit=crop",
+        "imageAlt": "Астрономические часы (Орлой) в Праге"
+      },
+      "day1_karlin_dinner": {
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Staroměstský+orloj+Praha&destination=Lokál+Hamburk+Praha&travelmode=transit",
+        "imageUrl": "https://images.unsplash.com/photo-1600679472391-50a116f31c26?q=80&w=1974&auto=format&fit=crop",
+        "imageAlt": "Уютный интерьер чешского паба"
+      },
+      "day2_castle": {
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Hotel+Adeba+Praha&destination=Pražský+hrad+tramvajová+zastávka+Praha&travelmode=transit",
+        "imageUrl": "https://images.unsplash.com/photo-1559228120-13f51f4721c5?q=80&w=2070&auto=format&fit=crop",
+        "imageAlt": "Панорама Пражского Града зимой"
+      },
+      "day2_st_vitus": {
+        "mapUrl": null,
+        "imageUrl": "https://images.unsplash.com/photo-1603323062223-f3631f240e8d?q=80&w=1974&auto=format&fit=crop",
+        "imageAlt": "Собор Святого Вита, экстерьер"
+      },
+      "day2_guard_change": {
+        "mapUrl": null,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Pražský_hrad%2C_střídání_stráží_I._nádvoří_2.JPG/1024px-Pražský_hrad%2C_střídání_stráží_I._nádvoří_2.JPG",
+        "imageAlt": "Смена караула в Пражском Граде"
+      },
+      "day2_mala_strana_lunch": {
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Pražský+hrad+Praha&destination=U+Glaubiců+Praha&waypoints=Staré+zámecké+schody+Praha&travelmode=walking",
+        "imageUrl": "https://images.unsplash.com/photo-1572467184207-03f90b9f1b95?q=80&w=1935&auto=format&fit=crop",
+        "imageAlt": "Улица Нерудова в районе Мала Страна"
+      },
+      "day2_lennon_wall": {
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=U+Glaubiců+Praha&destination=Karlův+most+Praha&waypoints=Zeď+Johna+Lennona+Praha|Park Kampa Praha|Vinárna Čertovka U Lužického semináře Praha",
+        "imageUrl": "https://images.unsplash.com/photo-1593033036496-0e10e1a6c3f3?q=80&w=2070&auto=format&fit=crop",
+        "imageAlt": "Стена Джона Леннона в Праге"
+      },
+      "day2_kampa": {
+        "mapUrl": null,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Praha_Kampa_Čertovka_kolo.jpg/1024px-Praha_Kampa_Čertovka_kolo.jpg",
+        "imageAlt": "Мельничное колесо на канале Чертовка, остров Кампа"
+      },
+      "day2_charles_bridge": {
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Karlův+most+Praha&destination=Hotel+Adeba+Praha&travelmode=transit",
+        "imageUrl": "https://images.unsplash.com/photo-1541393040335-5c4d6a133d5d?q=80&w=1974&auto=format&fit=crop",
+        "imageAlt": "Карлов мост в сумерках зимой"
+      },
+      "day3_parking": {
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Hotel+Adeba+Praha&destination=Garáže+Rudolfinum+Alšovo+nábřeží+Praha&travelmode=driving",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Rudolfinum_v_Praze_2022_01.jpg/1280px-Rudolfinum_v_Praze_2022_01.jpg",
+        "imageAlt": "Здание Рудольфинум в Праге"
+      },
+      "day3_petrin": {
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Garáže+Rudolfinum+Praha&destination=Újezd+lanová+dráha+Praha&travelmode=transit",
+        "imageUrl": "https://images.unsplash.com/photo-1607217597193-8a30646c03d7?q=80&w=1935&auto=format&fit=crop",
+        "imageAlt": "Вид на Прагу с холма Петршин зимой"
+      },
+      "day3_goose_feast": {
+        "mapUrl": null,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Svatomartinská_husa_2019.jpg/1024px-Svatomartinská_husa_2019.jpg",
+        "imageAlt": "Традиционное блюдо 'Святомартинский гусь'"
+      },
+      "day3_josefov": {
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Újezd+Praha&destination=Staronová+synagoga+Praha&travelmode=walking",
+        "imageUrl": "https://images.unsplash.com/photo-1593033036437-67b2d5d88f62?q=80&w=2070&auto=format&fit=crop",
+        "imageAlt": "Старое еврейское кладбище в Праге"
+      },
+      "day3_old_new_synagogue": {
+        "mapUrl": null,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Prag_Staronová_synagoga.jpg/1024px-Prag_Staronová_synagoga.jpg",
+        "imageAlt": "Староновая синагога, экстерьер"
+      },
+      "day3_departure": {
+        "mapUrl": "https://www.google.com/maps/dir/?api=1&origin=Staronová+synagoga+Praha&destination=Garáže+Rudolfinum+Praha&travelmode=walking",
+        "imageUrl": null,
+        "imageAlt": null
+      }
+    };
+
+    // Function to create a card
+    function createCard(title, description, data) {
+      return `
+        <div class="bg-white shadow-md rounded-lg overflow-hidden mb-6">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">${title}</h3>
+            ${description}
+            ${data.mapUrl ? `<a href="${data.mapUrl}" target="_blank" class="inline-block bg-blue-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors mt-4">📍 Показать маршрут</a>` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    // Day 1 content
+    const day1Cards = [
+      {
+        key: 'day1_arrival',
+        title: '15:00 - 16:30: Прибытие и заселение',
+        description: `
+          <p class="text-gray-700 mb-4">Прибудьте на машине и заселитесь в отель Adeba в районе Карлин. Паркуйте машину. Постарайтесь быть готовыми к исследованию к 16:30, как раз в тот момент, когда свет позднего дня угасает, и уличные фонари начинают отбрасывать свой теплый свет.</p>
+          <p class="text-gray-700 mb-4"><strong>Не забудьте купить и прокомпостировать 72-часовой проездной перед первой поездкой.</strong></p>
+        `
+      },
+      {
+        key: 'day1_wenceslas',
+        title: '16:30 - 18:00: Грандиозное знакомство через Вацлавскую площадь',
+        description: `
+          <p class="text-gray-700 mb-4">От вашего отеля рядом со станцией Křižíkova сядьте на линию метро B (желтая) и проедьте две остановки до Můstek, которая выходит прямо на нижнюю часть Вацлавской площади (Václavské náměstí). Изначально это был Конный рынок XIV века, этот 750-метровый бульвар стал фоном для самых ключевых моментов XX века в истории нации. Именно здесь в 1918 году была провозглашена первая Чехословацкая Республика; здесь студент Ян Палах поджег себя в 1969 году в знак протеста против советского вторжения; и здесь в 1989 году собирались огромные толпы, чтобы мирно свергнуть коммунистический режим во время Бархатной революции.</p>
+          <p class="text-gray-700 mb-4">На вершине площади возвышается монументальный <strong>Национальный музей</strong> и знаковая конная статуя <strong>святого Вацлава</strong>, покровителя нации. <strong>Легенда гласит, что в самый темный час для страны статуя оживет, и святой поведет воскресшую армию, чтобы спасти чешские земли.</strong></p>
+        `
+      },
+      {
+        key: 'day1_lucerna',
+        title: 'Пассаж Люцерна',
+        description: `
+          <p class="text-gray-700 mb-4">От статуи найдите вход в пассаж <strong>дворца Люцерна</strong>. Этот великолепный пассаж в стиле модерн, скрытый мир магазинов и исторического кинотеатра, был спроектирован дедом знаменитого диссидента и президента Вацлава Гавела. С его потолка свисает <strong>"Kůň"</strong>, провокационная скульптура Давида Черного, изображающая святого Вацлава на перевернутой мертвой лошади — остроумный и подрывной комментарий к героической статуе снаружи. Выйдите из пассажа во <strong>Францисканский сад (Františkánská zahrada)</strong>, прекрасно ухоженный и удивительно спокойный оазис, который предлагает момент покоя всего в нескольких шагах от суеты площади.</p>
+        `
+      },
+      {
+        key: 'day1_old_town',
+        title: '18:00 - 19:30: Лабиринт Старого города и Астрономические часы',
+        description: `
+          <p class="text-gray-700 mb-4">Из садов позвольте себе намеренно заблудиться в лабиринтах мощеных улочек, ведущих к Староместской площади (Staroměstské náměstí). По мере сгущения сумерек эта прогулка становится волшебной. Вы внезапно окажетесь на одной из самых захватывающих дух общественных площадей Европы, огромной площади, обрамленной веками архитектуры.</p>
+          <p class="text-gray-700 mb-4">Ваш взгляд сразу же привлекут две доминирующие церкви: сказочные двойные шпили готической <strong>церкви Богоматери перед Тыном</strong> и элегантный барочный фасад <strong>церкви Святого Николая</strong>. Но главным зрелищем площади являются <strong>Астрономические часы (Pražský Orloj)</strong> на стене Староместской ратуши. Приурочьте свой приход к началу часа (например, к 19:00), чтобы увидеть "Шествие двенадцати апостолов". Хотя само представление короткое и, как известно, скромное, совместное переживание ожидания в толпе — это квинтэссенция пражского момента. Часы, датируемые XV веком, являются чудом средневековой инженерии и одними из старейших в своем роде, которые все еще работают.</p>
+        `
+      },
+      {
+        key: 'day1_clock',
+        title: 'Ужин и пиво в Карлине (с 19:30)',
+        description: `
+          <p class="text-gray-700 mb-4">После осмотра Староместской площади (19:00-19:30) садитесь на метро (Můstek или Náměstí Republiky) и возвращайтесь в свой район Карлин.</p>
+          <p class="text-gray-700 mb-4">Идеальный вариант — совместить ужин и пиво в одном из отличных местных заведений.</p>
+          <ul class="list-disc list-inside text-gray-700 mb-4">
+            <li><strong>Lokál Hamburk:</strong> Идеальный выбор. Это просторный, современный пивной зал со свежайшим "танковым" пивом Pilsner Urquell и <strong>отличной традиционной едой</strong>. Вы сможете здесь полноценно поужинать.</li>
+            <li><strong>Dva kohouti:</strong> Модное место (мини-пивоварня и бар). Здесь в первую очередь пиво, но рядом часто бывают фуд-траки или можно заказать еду из соседнего ресторана.</li>
+          </ul>
+        `
+      }
+    ];
+
+    // Day 2 content
+    const day2Cards = [
+      {
+        key: 'day2_castle',
+        title: '9:30 - 13:00: Пражский Град (Pražský hrad) с ограниченным бюджетом',
+        description: `
+          <p class="text-gray-700 mb-4">Начните день, сев на живописный трамвай № 22, который поднимет вас на холм до остановки "Pražský hrad" (используйте свой 72-часовой проездной). Эта поездка — лучший способ избежать крутого подъема, сохранив энергию для исследования обширной территории замка.</p>
+          <p class="text-gray-700 mb-4">Цель — ощутить величие крупнейшего в мире древнего замкового комплекса, не покупая билет для входа внутрь. Территория, дворы и сады открыты для бесплатного посещения и предлагают более чем достаточно, чтобы заполнить утро. История замка начинается около 880 года с князя Борживоя и разворачивается на протяжении веков архитектурной эволюции: романская крепость уступила место готической королевской резиденции при императоре Карле IV, которая затем была преобразована в ренессансный центр эксцентричным императором Рудольфом II, прежде чем окончательно стать официальной резиденцией современного чешского президента.</p>
+          <p class="text-gray-700 mb-4">Снаружи вы можете полюбоваться ключевыми зданиями:</p>
+        `
+      },
+      {
+        key: 'day2_st_vitus',
+        title: 'Собор Святого Вита',
+        description: `
+          <p class="text-gray-700 mb-4"><strong>Собор Святого Вита:</strong> Этот захватывающий дух готический шедевр строился почти 600 лет, с 1344 по 1929 год. Его парящие шпили, замысловатые горгульи и великолепные витражи внушают трепет.</p>
+          <p class="text-gray-700 mb-4"><strong>Старый королевский дворец и базилика Святого Георгия:</strong> Осмотрите экстерьеры этих исторических зданий, представляя себе коронации и королевскую жизнь, которая протекала в их стенах.</p>
+        `
+      },
+      {
+        key: 'day2_guard_change',
+        title: 'Смена караула',
+        description: `
+          <p class="text-gray-700 mb-4"><strong>Смена караула:</strong> Главным событием утра является Смена караула. Займите место в первом дворе к 11:50, чтобы увидеть полную <strong>церемонию в полдень (12:00)</strong>. Это грандиозное представление с военным оркестром и точной хореографией — фантастическое и совершенно бесплатное зрелище.</p>
+        `
+      },
+      {
+        key: 'day2_mala_strana_lunch',
+        title: '13:00 - 14:00: Обед в Малой Стране (Malá Strana)',
+        description: `
+          <p class="text-gray-700 mb-4">Спуститесь с замка по Старой замковой лестнице, откуда открываются захватывающие панорамные виды на море красных черепичных крыш, характерных для Малой Страны. На обед выберите один из нескольких отличных и доступных вариантов:</p>
+          <ul class="list-disc list-inside text-gray-700 mb-4">
+            <li><strong>U Glaubiců:</strong> Исторический паб, расположенный прямо на главной площади Малой Страны (Malostranské náměstí). Здесь подают классические чешские блюда по разумным ценам в уютной, традиционной подвальной обстановке.</li>
+            <li><strong>Столовая HAMU:</strong> Для настоящей скрытой жемчужины найдите студенческую столовую Академии исполнительских искусств. Спрятанная во дворе за главной площадью, она предлагает полноценные, сытные обеды примерно за 140 крон. Вывесок нет, но она открыта для публики и предоставляет подлинный, нетуристический опыт питания.</li>
+            <li><strong>Hostinec U Kocoura:</strong> Любимый паб без излишеств на туристической улице Нерудова, известный своим дешевым пивом и аутентичной местной атмосферой.</li>
+          </ul>
+        `
+      },
+      {
+        key: 'day2_lennon_wall',
+        title: '14:00 - 16:30: Исследование очарования Малой Страны',
+        description: `
+          <p class="text-gray-700 mb-4">Основанная в 1257 году королем Отакаром II, Мала Страна — это прекрасно сохранившийся район с величественными барочными дворцами, тихими мощеными улочками и скрытыми садами.</p>
+          <ul class="list-disc list-inside text-gray-700 mb-4">
+            <li>Полюбуйтесь великолепным куполом <strong>церкви Святого Николая</strong>, который доминирует на Малостранской площади.</li>
+            <li>Прогуляйтесь по <strong>улице Нерудова</strong>, ища причудливые домовые знаки — такие как "У двух солнц" или "У красного льва" — которые идентифицировали здания до появления уличных номеров.</li>
+            <li>Посетите <strong>Стену Леннона</strong>, яркий и постоянно меняющийся памятник миру и свободе, который возник в 1980-х годах как форма протеста против коммунистического режима.</li>
+            <li>В качестве последней необычной остановки найдите <strong>самую узкую улицу Праги</strong>, Vinárna Čertovka, которая настолько узка, что для управления потоком пешеходов требуется светофор.</li>
+          </ul>
+        `
+      },
+      {
+        key: 'day2_kampa',
+        title: 'Остров Кампа',
+        description: `
+          <p class="text-gray-700 mb-4">Скройтесь в тишине <strong>острова Кампа</strong>, мирного парка, отделенного от материка очаровательным каналом, известным как <strong>Чертовка (Devil's Stream)</strong>. Здесь вы найдете знаменитое колесо Великой Приоровой мельницы и сможете насладиться потрясающими видами на Карлов мост.</p>
+        `
+      },
+      {
+        key: 'day2_charles_bridge',
+        title: 'С 16:30: Знаменитый Карлов мост на закате',
+        description: `
+          <p class="text-gray-700 mb-4">Спланируйте свою прогулку обратно в Старый город так, чтобы пересечь Карлов мост (Karlův most) на закате (около 16:20). Заказанный императором Карлом IV в 1357 году, этот каменный мост был единственным переходом через реку в Праге более 400 лет, жизненно важным связующим звеном между Королевским замком и коммерческим сердцем Старого города.</p>
+          <p class="text-gray-700 mb-4">Пересекая мост, обратите внимание на "аллею святых" — 30 драматических барочных статуй, которые украшают его балюстрады. Самая известная из них — статуя святого Яна Непомуцкого, священника XIV века, которого сбросили с моста за отказ раскрыть королю исповедь королевы. Найдите бронзовую доску у основания его статуи; она отполирована до блеска веками посетителей, прикасающихся к ней на удачу и чтобы обеспечить свое возвращение в Прагу.</p>
+        `
+      }
+    ];
+
+    // Day 3 content - Two options
+    const day3Cards = [
+      {
+        key: 'day3_parking',
+        title: 'Два варианта на выбор',
+        description: `
+          <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+            <p class="font-bold text-blue-900 mb-2">В этот день у вас есть два варианта, зависящих от парковки:</p>
+            <ul class="list-disc list-inside text-blue-900">
+              <li><strong>Вариант А:</strong> Платная парковка в центре (~420 крон) — максимальное удобство</li>
+              <li><strong>Вариант Б:</strong> Бесплатная парковка в отеле до 16:00 — максимальная экономия</li>
+            </ul>
+          </div>
+          <h4 class="font-bold text-lg mb-2">Вариант А: План с платной парковкой (Максимальное удобство)</h4>
+          <p class="text-gray-700 mb-2"><strong>9:30:</strong> Выселение из отеля Adeba. Выселяйтесь из отеля, забирайте все вещи.</p>
+          <p class="text-gray-700 mb-4"><strong>10:00:</strong> Парковка в центре. Ведите машину и паркуйтесь на подземной парковке "Рудольфинум" (Garáže Rudolfinum) на Alšovo nábřeží 12. <strong>Стоимость:</strong> Рассчитывайте примерно на 70 крон/час (~420 крон за 6 часов).</p>
+          <h4 class="font-bold text-lg mb-2">Вариант Б: План с бесплатной парковкой (Максимальная экономия)</h4>
+          <p class="text-gray-700 mb-2"><em>Этот план работает, <strong>только если</strong> отель Adeba разрешит вам бесплатно оставить машину на их парковке до 16:00. Он экономит вам ~420 крон, но требует немного больше времени на дорогу.</em></p>
+          <p class="text-gray-700 mb-2"><strong>9:30 - 10:00:</strong> Выселение из отеля Adeba. Выселяйтесь из номера. Обязательно подтвердите на ресепшн, что машина может оставаться до 16:00. Оставьте багаж в машине.</p>
+          <p class="text-gray-700 mb-4"><strong>10:00 - 10:45:</strong> Дорога в центр. Отправляйтесь от отеля (ст. Křižíkova) на трамвае/метро (используя 72-часовой проездной) до остановки "Újezd" (подножие холма Петршин).</p>
+        `
+      },
+      {
+        key: 'day3_petrin',
+        title: '10:30 - 12:00: Прощальная панорама с холма Петршин',
+        description: `
+          <p class="text-gray-700 mb-4"><strong>Вариант А:</strong> От парковки дойдите до остановки "Malostranská" (5 мин), сядьте на трамвай (используйте свой 72-часовой проездной) до "Újezd". Там пересядьте на фуникулер на Петршин.</p>
+          <p class="text-gray-700 mb-4"><strong>Вариант Б:</strong> Поднимайтесь на фуникулере (он включен в ваш 72-часовой проездной).</p>
+          <p class="text-gray-700 mb-4"><strong>Важно:</strong> Ваш 72-часовой проездной полностью покрывает поездку на фуникулере (туда и обратно). Просто покажите его при входе.</p>
+          <p class="text-gray-700 mb-4">С вершины вам откроется один из самых захватывающих панорамных видов на город — замок, река, мосты и бесчисленные шпили, раскинувшиеся внизу. Петршинская смотровая башня, уменьшенная версия Эйфелевой башни, предлагает еще более высокую точку обзора за плату, но вид с самой вершины холма бесплатный и не менее впечатляющий.</p>
+        `
+      },
+      {
+        key: 'day3_goose_feast',
+        title: '12:00 - 13:45: Праздничный обед — День Святого Мартина (Гусь!)',
+        description: `
+          <p class="text-gray-700 mb-4">Спуститесь на фуникулере обратно в Малу Страну. 11.11 — это тот самый день! Ищите рестораны с вывеской "Svatomartinské menu" или "Svatomartinská husa" и наслаждайтесь праздничным обедом из жареного гуся и молодого вина. Это уникальная чешская традиция.</p>
+        `
+      },
+      {
+        key: 'day3_josefov',
+        title: '13:45 - 15:15: Прогулка по Еврейскому кварталу (Йозефов)',
+        description: `
+          <p class="text-gray-700 mb-4">После обеда неспешно прогуляйтесь из Малой Страны через Манесов мост и осмотрите Йозефов снаружи. Район возник как огороженное гетто в XIII веке и стал одним из важнейших центров еврейской жизни в Европе. Его история также является историей огромной трагедии, кульминацией которой стало почти полное уничтожение его общины во время Холокоста. Жутко, но нацисты сохранили район с намерением создать "Музей вымершей расы".</p>
+          <ul class="list-disc list-inside text-gray-700 mb-4">
+            <li><strong>Староновая синагога:</strong> Старейшая действующая синагога в Европе (ок. 1270 г.) и легендарный дом пражского Голема.</li>
+            <li><strong>Старое еврейское кладбище:</strong> Впечатляющее зрелище с тысячами выветренных надгробий, уложенных одно на другое, что является ярким свидетельством веков, когда община была ограничена этим крошечным участком земли.</li>
+            <li><strong>Испанская синагога:</strong> Полюбуйтесь ее потрясающей архитектурой в мавританском стиле снаружи.</li>
+          </ul>
+        `
+      },
+      {
+        key: 'day3_old_new_synagogue',
+        title: '15:15 - 16:00: Возвращение и отъезд',
+        description: `
+          <p class="text-gray-700 mb-4"><strong>Вариант А:</strong> Ваша прогулка по Еврейскому кварталу закончится прямо у парковки "Рудольфинум". Спокойно выезжайте с парковки и направляйтесь домой.</p>
+          <p class="text-gray-700 mb-4"><strong>Вариант Б:</strong> Вам нужно выдвигаться обратно. От Еврейского квартала (ст. Staroměstská) садитесь на метро/трамвай и возвращайтесь в отель (ст. Křižíkova). Забирайте машину с парковки отеля и направляйтесь домой.</p>
+        `
+      }
+    ];
+
+    // Render cards
+    function renderCards() {
+      const day1Container = document.getElementById('day1-cards');
+      const day2Container = document.getElementById('day2-cards');
+      const day3Container = document.getElementById('day3-cards');
+
+      day1Container.innerHTML = day1Cards.map(card => 
+        createCard(card.title, card.description, planData[card.key])
+      ).join('');
+
+      day2Container.innerHTML = day2Cards.map(card => 
+        createCard(card.title, card.description, planData[card.key])
+      ).join('');
+
+      day3Container.innerHTML = day3Cards.map(card => 
+        createCard(card.title, card.description, planData[card.key])
+      ).join('');
+    }
+
+    // Tab switching function
+    function showTab(tabNumber) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Remove active class from all buttons
+      document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Show selected tab
+      document.getElementById(`tab${tabNumber}-content`).classList.add('active');
+      
+      // Add active class to selected button
+      document.getElementById(`tab${tabNumber}-btn`).classList.add('active');
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCards();
+      showTab(1); // Default to first tab
+    });
+  </script>
+</body>
+</html>
