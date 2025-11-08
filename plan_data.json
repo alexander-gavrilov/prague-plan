@@ -1,0 +1,97 @@
+{
+    "day1_arrival": {
+        "mapUrl": null,
+        "imageUrl": "https://www.google.com/search?q=https://images.unsplash.com/photo-1519677100203-a0e668c9c93c%3Fq%3D80%26w%3D1974%26auto%3Dformat%26fit%3Dcrop",
+        "imageAlt": "Вечерняя улица в Праге в ноябре"
+    },
+    "day1_wenceslas": {
+        "mapUrl": "https://www.google.com/search?q=https://www.google.com/maps/dir/%3Fapi%3D1%26origin%3DHotel%2BAdeba%2BPraha%26destination%3DM%C5%AFstek%2BPraha%26travelmode%3Dtransit",
+        "imageUrl": "https://www.google.com/search?q=https://images.unsplash.com/photo-1596305016259-3c726d3d0434%3Fq%3D80%26w%3D1974%26auto%3Dformat%26fit%3Dcrop",
+        "imageAlt": "Вацлавская площадь в сумерках"
+    },
+    "day1_lucerna": {
+        "mapUrl": "https://www.google.com/search?q=https://www.google.com/maps/dir/%3Fapi%3D1%26origin%3DM%C5%AFstek%2BPraha%26destination%3DStarom%C4%9Bstsk%C3%BD%2Borloj%2BPraha%26waypoints%3DPal%C3%A1c%2BLucerna%2BPraha|Františkánská+zahrada+Praha&travelmode=walking",
+        "imageUrl": "https://www.google.com/search?q=https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/K%C5%AF%C5%88-David_%C4%8Cern%C3%BD-Pal%C3%A1c_Lucerna_01.jpg/800px-K%C5%AF%C5%88-David_%C4%8Cern%C3%BD-Pal%C3%A1c_Lucerna_01.jpg",
+        "imageAlt": "Скульптура 'Конь' в пассаже Люцерна"
+    },
+    "day1_old_town": {
+        "mapUrl": null,
+        "imageUrl": "https://www.google.com/search?q=https://images.unsplash.com/photo-1607217597195-65a43c2450c1%3Fq%3D80%26w%3D1935%26auto%3Dformat%26fit%3Dcrop",
+        "imageAlt": "Староместская площадь и Тынский храм зимой"
+    },
+    "day1_clock": {
+        "mapUrl": null,
+        "imageUrl": "https://www.google.com/search?q=https://images.unsplash.com/photo-1563427953281-52d91f4f89c4%3Fq%3D80%26w%3D1964%26auto%3Dformat%26fit%3Dcrop",
+        "imageAlt": "Астрономические часы (Орлой) в Праге"
+    },
+    "day1_karlin_dinner": {
+        "mapUrl": "https://www.google.com/search?q=https://www.google.com/maps/dir/%3Fapi%3D1%26origin%3DStarom%C4%9Bstsk%C3%BD%2Borloj%2BPraha%26destination%3DLok%C3%A1l%2BHamburk%2BPraha%26travelmode%3Dtransit",
+        "imageUrl": "https://www.google.com/search?q=https://images.unsplash.com/photo-1600679472391-50a116f31c26%3Fq%3D80%26w%3D1974%26auto%3Dformat%26fit%3Dcrop",
+        "imageAlt": "Уютный интерьер чешского паба"
+    },
+    "day2_castle": {
+        "mapUrl": "https://www.google.com/search?q=https://www.google.com/maps/dir/%3Fapi%3D1%26origin%3DHotel%2BAdeba%2BPraha%26destination%3DPra%C5%BEsk%C3%BD%2Bhrad%2Btramvajov%C3%A1%2Bzast%C3%A1vka%2BPraha%26travelmode%3Dtransit",
+        "imageUrl": "https://www.google.com/search?q=https://images.unsplash.com/photo-1559228120-13f51f4721c5%3Fq%3D80%26w%3D2070%26auto%3Dformat%26fit%3Dcrop",
+        "imageAlt": "Панорама Пражского Града зимой"
+    },
+    "day2_st_vitus": {
+        "mapUrl": null,
+        "imageUrl": "https://www.google.com/search?q=https://images.unsplash.com/photo-1603323062223-f3631f240e8d%3Fq%3D80%26w%3D1974%26auto%3Dformat%26fit%3Dcrop",
+        "imageAlt": "Собор Святого Вита, экстерьер"
+    },
+    "day2_guard_change": {
+        "mapUrl": null,
+        "imageUrl": "https://www.google.com/search?q=https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Pra%C5%BEsk%C3%BD_hrad%252C_st%C5%99%C3%ADd%C3%A1n%C3%AD_str%C3%A1%C5%BE%C3%AD_I._n%C3%A1dvo%C5%99%C3%AD_2.JPG/1024px-Pra%C5%BEsk%C3%BD_hrad%252C_st%C5%99%C3%ADd%C3%A1n%C3%AD_str%C3%A1%C5%BE%C3%AD_I._n%C3%A1dvo%C5%99%C3%AD_2.JPG",
+        "imageAlt": "Смена караула в Пражском Граде"
+    },
+    "day2_mala_strana_lunch": {
+        "mapUrl": "https://www.google.com/search?q=https://www.google.com/maps/dir/%3Fapi%3D1%26origin%3DPra%C5%BEsk%C3%BD%2Bhrad%2BPraha%26destination%3DU%2BGlaubic%C5%AF%2BPraha%26waypoints%3DStar%C3%A9%2Bz%C3%A1meck%C3%A9%2Bschody%2BPraha%26travelmode%3Dwalking",
+        "imageUrl": "https://www.google.com/search?q=https://images.unsplash.com/photo-1572467184207-03f90b9f1b95%3Fq%3D80%26w%3D1935%26auto%3Dformat%26fit%3Dcrop",
+        "imageAlt": "Улица Нерудова в районе Мала Страна"
+    },
+    "day2_lennon_wall": {
+        "mapUrl": "https://www.google.com/search?q=https://www.google.com/maps/dir/%3Fapi%3D1%26origin%3DU%2BGlaubic%C5%AF%2BPraha%26destination%3DKarl%C5%AFv%2Bmost%2BPraha%26waypoints%3DZe%C4%8F%2BJohna%2BLennona%2BPraha|Park+Kampa+Praha|Vinárna+Čertovka+U+Lužického+semináře+Praha&travelmode=walking",
+        "imageUrl": "https://www.google.com/search?q=https://images.unsplash.com/photo-1593033036496-0e10e1a6c3f3%3Fq%3D80%26w%3D2070%26auto%3Dformat%26fit%3Dcrop",
+        "imageAlt": "Стена Джона Леннона в Праге"
+    },
+    "day2_kampa": {
+        "mapUrl": null,
+        "imageUrl": "https://www.google.com/search?q=https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Praha_Kampa_%C4%8Certovka_kolo.jpg/1024px-Praha_Kampa_%C4%8Certovka_kolo.jpg",
+        "imageAlt": "Мельничное колесо на канале Чертовка, остров Кампа"
+    },
+    "day2_charles_bridge": {
+        "mapUrl": "https://www.google.com/search?q=https://www.google.com/maps/dir/%3Fapi%3D1%26origin%3DKarl%C5%AFv%2Bmost%2BPraha%26destination%3DHotel%2BAdeba%2BPraha%26travelmode%3Dtransit",
+        "imageUrl": "https://www.google.com/search?q=https://images.unsplash.com/photo-1541393040335-5c4d6a133d5d%3Fq%3D80%26w%3D1974%26auto%3Dformat%26fit%3Dcrop",
+        "imageAlt": "Карлов мост в сумерках зимой"
+    },
+    "day3_parking": {
+        "mapUrl": "https://www.google.com/search?q=https://www.google.com/maps/dir/%3Fapi%3D1%26origin%3DHotel%2BAdeba%2BPraha%26destination%3DGar%C3%A1%C5%BEe%2BRudolfinum%2BAl%C5%A1ovo%2Bn%C3%A1b%C5%99e%C5%BE%C3%AD%2BPraha%26travelmode%3Ddriving",
+        "imageUrl": "https://www.google.com/search?q=https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Rudolfinum_v_Praze_2022_01.jpg/1280px-Rudolfinum_v_Praze_2022_01.jpg",
+        "imageAlt": "Здание Рудольфинум в Праге"
+    },
+    "day3_petrin": {
+        "mapUrl": "https://www.google.com/search?q=https://www.google.com/maps/dir/%3Fapi%3D1%26origin%3DGar%C3%A1%C5%BEe%2BRudolfinum%2BPraha%26destination%3D%C3%9Ajezd%2Blanov%C3%A1%2Bdr%C3%A1ha%2BPraha%26travelmode%3Dtransit",
+        "imageUrl": "https://www.google.com/search?q=https://images.unsplash.com/photo-1607217597193-8a30646c03d7%3Fq%3D80%26w%3D1935%26auto%3Dformat%26fit%3Dcrop",
+        "imageAlt": "Вид на Прагу с холма Петршин зимой"
+    },
+    "day3_goose_feast": {
+        "mapUrl": null,
+        "imageUrl": "https://www.google.com/search?q=https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Svatomartinsk%C3%A1_husa_2019.jpg/1024px-Svatomartinsk%C3%A1_husa_2019.jpg",
+        "imageAlt": "Традиционное блюдо 'Святомартинский гусь'"
+    },
+    "day3_josefov": {
+        "mapUrl": "https://www.google.com/search?q=https://www.google.com/maps/dir/%3Fapi%3D1%26origin%3D%C3%9Ajezd%2BPraha%26destination%3DStaronov%C3%A1%2Bsynagoga%2BPraha%26travelmode%3Dwalking",
+        "imageUrl": "https://www.google.com/search?q=https://images.unsplash.com/photo-1593033036437-67b2d5d88f62%3Fq%3D80%26w%3D2070%26auto%3Dformat%26fit%3Dcrop",
+        "imageAlt": "Старое еврейское кладбище в Праге"
+    },
+    "day3_old_new_synagogue": {
+        "mapUrl": null,
+        "imageUrl": "https://www.google.com/search?q=https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Prag_Staronov%C3%A1_synagoga.jpg/1024px-Prag_Staronov%C3%A1_synagoga.jpg",
+        "imageAlt": "Староновая синагога, экстерьер"
+    },
+    "day3_departure": {
+        "mapUrl": "https://www.google.com/search?q=https://www.google.com/maps/dir/%3Fapi%3D1%26origin%3DStaronov%C3%A1%2Bsynagoga%2BPraha%26destination%3DGar%C3%A1%C5%BEe%2BRudolfinum%2BPraha%26travelmode%3Dwalking",
+        "imageUrl": null,
+        "imageAlt": null
+    }
+}
